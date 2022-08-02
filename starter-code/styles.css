@@ -203,6 +203,24 @@ body{
     }
 
 .game-over{
-
     display:none
+}
+
+.tile6{
+    width: 14.3%;
+    height: 14.3%;
+    border-radius: 50%;
+    color: var(--white);
+}
+.tile4{
+    width: 25%;
+    height: 25%;
+    border-radius: 50%;
+    color: var(--white);
+}
+.tile4, .tile6{
+    background: var(--light-grey);
+}
+.tile4:active, .tile6:active{
+    background-color: var(--yello);
 }

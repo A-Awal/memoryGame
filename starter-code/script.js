@@ -14,14 +14,8 @@ class Memory {
         this._tiles.concat(arr);  
     }
 
-    deficulty(level){    
-    //   level: int
-    // sets current to the tiles to play 
-        let tile= this._tiles[Math.floor(Math.random()*level)];
-    }
-
     getBoard(num, level){
-        /*Takes an num and 
+        /* num and level: ints;
         returns sqaure array of the number with the tiles given */
 
         let tile= this._tiles[Math.floor(Math.random()*level)];
@@ -40,5 +34,12 @@ class Memory {
         this._currentArr =size;
         //console.log(size);
         return this._currentArr;
+
     }
+
+    move(id1, id2){
+        
+    }
+
+
 }

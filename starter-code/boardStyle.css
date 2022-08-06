@@ -14,7 +14,6 @@
     --display: block;
 
 }
-
 h1{
     font-size: 48px;
 }
@@ -31,99 +30,9 @@ body{
     height: 100vh;
 }
 
-/*Start*/
+
 body{
-    background-color: var(--dark-grey);
-}
-
-.start{
-    padding: 1%;
-    width: 45%;
-    height: 67%;
-
     background-color: var(--dark-white);
-
-
-    position: relative;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-
-    display: var(--display);
-
-}
-    .theme, .players, .grid-size{
-        height: 17%;
-        border: 1px dotted black;
-    }
-    .theme{
-        width: 100%;
-        height: fit-content;
-
-
-        position: relative;
-
-    }
-        .numbers{
-            float: left;
-
-            width: 50%;
-        }
-        .icons{
-            float: right;
-            width: 50%;
-        }
-
-    .players{
-
-    }
-        .int{
-            display: flex;
-            justify-content: space-between;
-        }
-            .player{
-                width: 23%;
-                background: var(--light-grey);
-
-                display: flex;
-                justify-content: center;
-                border-radius: 35%;
-
-            }
-
-    .grid-size{
-        width: 100%;
-        height: fit-content;
-        display: flex;
-        flex-direction: column;
-    }
-        .size{
-            width: 100%;
-            height: fit-content;
-            background-color: aqua;
-        }
-            .grid4{
-                width: 50%;
-                float: left;
-                background-color: red;
-            }
-            .grid6{
-                width: 50%;
-                float:right;
-                background-color: blueviolet;
-
-            }
-
-            /* for use in js */
-.body{
-    background-color: var(--dark-white); 
-}
-.gameBoard{
-    display: none;
 }
 
 .playing{
@@ -154,7 +63,6 @@ body{
             float: right;
         }
 
-
     .board{
         padding: 0%;
         width: 40%;
@@ -180,7 +88,6 @@ body{
         flex-direction: row;
         justify-content: space-between;
         width: 77%;
-        height: fit-content;
 
         position: absolute;
         bottom: 0%;
@@ -192,20 +99,18 @@ body{
 
     }
     .pl{
-        background-color: rgb(67, 165, 42);
+        background-color: brown;
         width: 23%;
         height: 78%;
 
         display: flex;
         justify-content: center;
-        flex-direction: column;
         align-items: center;
-        
+
     }
 
     .turn{
         display: none;
-        
     }
 
 .game-over{
@@ -231,8 +136,5 @@ body{
     align-items: center;
 }
 .tile4:active, .tile6:active{
-    background-color: var(--yello);
-}
-.iconClick{
     background-color: var(--yello);
 }

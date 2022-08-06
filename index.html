@@ -13,135 +13,138 @@
 </head>
 <body>
   <div class="start">
-  <!-- Game setup start -->
-  <div class="theme">
-    <div>Select Theme</div>
-    <div class="numbers">Numbers</div>
-    <div class="icons">Icons</div>
-  </div>
-  
-  
-  <div class="players">
-    <div>Number of Players</div>
-    <div class="int">
-      <div class="player p1" >1</div>
-      <div class="player p2">2</div>
-      <div class="player p3">3</div>
-      <div class="player p4">4</div>
+    <!-- Game setup start -->
+    <div class="theme">
+      <div>Select Theme</div>
+      <div class="numbers">Numbers</div>
+      <div class="icons">Icons</div>
     </div>
-  </div>
-
-  <div class="grid-size">
-    <div class="size">
-      <div class="grid grid4">4X4</div>
-    <div class="grid grid6">6X6</div>
-    </div>
-    <div class="start">Start Game</div>
-  </div>
-  </div>
-
-  
-  <!-- Game setup end -->
-<div class="gameBoard">
-  <div class="playing">
-      <!-- Game board start -->
-  <div class="head">
-    <h2 class="headh2">memory</h2>
-    <div class="restart">Restart</div>
-    <div class="new-game">New Game</div>
-  </div>
-  
-  <div class="board"> </div>
-  <!-- Multiplayer scores start -->
-  <div class="player-el">
-    <div class="pl pl1">
-      <div>
-        Player 1
-      </div>
-      <div class="turn">
-        Current Turn
-      </div>
-        <!-- P1 score -->
-      <div class="plScore"></div>
-    </div>
-  
-  
-    <div class="pl pl2">
-      <div>
-        Player 2
-      </div>
-      <div class="turn">
-        Current Turn
-      </div>
-        <!-- P2 score -->
-      <div class="plScore"></div>
-  
-    </div>
-  
-  
-  
-    <div class="pl pl3">
-      <div>
-        Player 3
-      </div>
-      <div class="turn">
-        Current Turn
-      </div>
-        <!-- P3 score -->
-      <div class="plScore"></div>
-  
-    </div>
-  
-    <!-- P4 score -->
-    <div class="pl p4">
-      <div>
-        Player 4
-      </div>
-      <div class="turn">
-        Current Turn
-      </div>
-        <!-- P4 score -->
-      <div class="plScore"></div>
-  
-    </div>
-  </div>
-  
-
-  <div class="game-over">
     
+    
+    <div class="players">
+      <div>Number of Players</div>
+      <div class="int">
+        <div class="player p1" >1</div>
+        <div class="player p2">2</div>
+        <div class="player p3">3</div>
+        <div class="player p4">4</div>
+      </div>
+    </div>
+
+    <div class="grid-size">
+      <div class="size">
+        <div class="grid grid4">4X4</div>
+        <div class="grid grid6">6X6</div>
+      </div>
+    </div>
+
+    <button class="begin"> Start Game</button>
+      
+  </div>
+  
+
+  <!-- Game setup end -->
+
+  <div class="gameBoard">
+    <div class="playing">
+        <!-- Game board start -->
+    <div class="head">
+      <h2 class="headh2">memory</h2>
+      <div class="restart">Restart</div>
+      <div class="new-game">New Game</div>
+    </div>
+    
+    <div class="board"> </div>
     <!-- Multiplayer scores start -->
-    <div class="stat multiplayer-stat">
+    <div class="player-el">
+      <div class="pl">
+        <div class="pl1">
+          Player 1
+        </div>
+        <div class="turn">
+          Current Turn
+        </div>
+          <!-- P1 score -->
+        <div class="plScore"></div>
+      </div>
+    
+    
+      <div class="pl">
+        <div class="pl2">
+          Player 2
+        </div>
+        <div class="turn">
+          Current Turn
+        </div>
+          <!-- P2 score -->
+        <div class="plScore"></div>
+    
+      </div>
+    
+    
+    
+      <div class="pl">
+        <div class="pl3">
+          Player 3
+        </div>
+        <div class="turn">
+          Current Turn
+        </div>
+          <!-- P3 score -->
+        <div class="plScore"></div>
+    
+      </div>
+    
+      <!-- P4 score -->
+      <div class="pl">
+        <div class="pl4">
+          Player 4
+        </div>
+        <div class="turn">
+          Current Turn
+        </div>
+          <!-- P4 score -->
+        <div class="plScore"></div>
+    
+      </div>
+    </div>
+    
+  
+    <div class="game-over">
+      
+      <!-- Multiplayer scores start -->
+      <div class="stat multiplayer-stat">
+        <div class="comment">
+          <h2></h2>
+          <p></p>
+        </div>
+      </div>
+  
+    
+    
+  
+      <!-- Solo game time and moves counter start -->
+     <div class="stat solo-stat">
       <div class="comment">
         <h2></h2>
         <p></p>
       </div>
+      <!-- Time elapsed -->
+      <div class="time">  Time </div>
+        <!-- Moves total -->
+      <div class="moves">Moves</div>
     </div>
-
   
+    
   
-
-    <!-- Solo game time and moves counter start -->
-   <div class="stat solo-stat">
-    <div class="comment">
-      <h2></h2>
-      <p></p>
-    </div>
-    <!-- Time elapsed -->
-    <div class="time">  Time </div>
-      <!-- Moves total -->
-    <div class="moves">Moves</div>
+    
+  
+    <!-- Solo game time and moves counter end -->
+  
+    <!-- Game board end -->
+  
   </div>
-
   
-
-  
-
-  <!-- Solo game time and moves counter end -->
-
-  <!-- Game board end -->
-
-</div>
-  
-
+<script src="./starter-code/script.js"></script>
 </body>
 </html>

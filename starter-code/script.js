@@ -9,6 +9,7 @@ class Memory {
         this._currentMove=[];
         this._currentObj=[];
         this._turn =1;
+        this._selected = 0;
     }
     setscore(){
         this._score++;
@@ -22,24 +23,34 @@ class Memory {
 
 
     setTile(arr){
-        /*takes an array required tile
-        and empties the tile prop off previous type
+        /*takes an array of required tile
+        and empties the tile property off previous type
         and reassings the new array */
         this._tiles=[];
         arr.forEach((tile, index) =>{
             let newTile = {};
             newTile[index]=tile;
             this._tiles.push(newTile);
+
         })
-          
-        console.log(this._tiles);
+        
+        
+        // let bls = this._tiles.length-1;
+
+        // this._tiles[Math.floor(Math.random()*bls)] = this.setBlunt();
+        // this._tiles[Math.floor(Math.random()*bls)] = this.setBlunt();
+        // this._tiles[Math.floor(Math.random()*bls)] = this.setBlunt();
+        // console.log(this._tiles, 'a these the tile');
     }
+    
+    // setBlunt(){
+    //     return {100: "<div></div>"};
+
+    // }
 
     getBoard(num, level){
         /* num and level: ints;
         returns sqaure array of the number with the tiles given */
-
-
         let size = [];
         for(let i=0; i<num; i++){
             size.unshift([])
@@ -53,39 +64,90 @@ class Memory {
                 n++;
             }
         })
+        this._currentArr =[];
         this._currentArr =size;
         console.log(size);
         return this._currentArr;
 
     }
 
-    move(id1, id2){
-        // takes two values
-        // check if they are equal
-        // replace them with blunt values
-        // adjusts the scores
+    
 
-        if(id1===id2){
-            this._score++;
-        }
-        this._currentArr[this._currentArr.findIndex(id1)]==this._blunt;
-        this._currentArr[this._currentArr.findIndex(id2)]==this._blunt;
-
-    }
 
     getMove(){
-        // set current move to user input selected elements
+        // set current move to user selected elements
         let brd = document.querySelector('.board');
         let brdEl = brd.children;
         //console.log(brdEl);
         for(let tile of brdEl){ 
-            tile.addEventListener('click', ()=> {this._currentMove.push(tile.innerHTML)
+            
+            tile.addEventListener('click', ()=> {
+            this._currentMove.push(tile.innerHTML);
             console.log(this._currentMove, 'this is the current move');
-            //tile.addEventListener('click', (event)=>event.target.className='iconClick')
+            this._selected++;
+            
+            tile.classList.add('iconClick');
+            tile.classList.remove('blunt');
+
+            console.log(tile.innerHTML, 'iner of inner');
+            if(this._selected >2){
+                for(let e of brdEl){
+                    if(e.classList.contains('iconClick')){ // for setting selected to blunt
+                        // e.innerHTML= Object.values(this.setBlunt());
+                        this.pairCounter();
+                        // e.removeEventListener('click', )
+                        e.classList.remove('iconClick');
+                        // e.classList.add('blunt');
+                    }
+                
+
+                    
+                };
+                this._selected =0;
+            }
+            
         });
+        
         }
     
     }
+
+    pairCounter(){
+        let brd=document.querySelector('.board');
+        let brdEl = brd.children;
+        let brdArr =[];
+        let itar =[];
+        for(let i of brdEl){
+            brdArr.push(i.innerText);
+        }
+        console.log(brdArr, 'brd arra')
+        let pair = brdArr.reduce((last, curr, index, ar)=>{
+            let valnum=0;
+            // console.log('i am valnum', valnum)
+                if(curr!='<div></div>' && curr!=""){
+                    if(!itar.includes(curr)){
+                        itar.push(curr);
+                        if(itar.includes(curr)){
+                            ar.slice(index).forEach((e)=>{
+                            
+                                if(curr == e){
+                                    valnum++;
+                                    console.log(curr+"-"+ e +'-'+ valnum)
+    
+                                }
+                            })
+                        }
+                    }
+                    
+                    
+                }
+                return last+ Math.floor(valnum/2);
+            }, 0)
+        console.log( 'you have', pair, 'moves remaining');
+        return pair;
+    }
+
+
 
     getObject(){
         // get a object of the current move 
@@ -118,6 +180,7 @@ class Memory {
                 this.getObject();
                 console.log('resolved')
                 //this._currentMove=[];
+                // console.log(this._currentObj, 'this what is not working');
                 
                 resolve (this._currentObj.splice(0, 2));
                 
@@ -147,12 +210,18 @@ class Memory {
             
         )
         .then((indexArr)=>{
-            if(indexArr[0]===indexArr[1]){
-                // this.setscore()
-                this.scoreManager()
+            this.playerRegisterer();
+            // console.log(indexArr, 'this na index array');
+            if(indexArr[0]==indexArr[1] ){
+                if(indexArr[0]<100){
+                    this.scoreManager();
+                    
+                }
             }
-            console.log(indexArr);
-            this.turnManager();
+            // if(this.pairCounter==0){
+            //     console.log('Done bro. Game Over')
+            //    }
+            this.turnManager(); //position is important
         }).then(()=>this.gameLogic())
 
         
@@ -168,22 +237,42 @@ class Memory {
 
         let currentPlayer = document.querySelector(`.pl${this._turn}`);
         
-        currentPlayer.style.backgroundColor='red';
-        currentPlayer.nextElementSibling.style.display='block';
+        let p =(document.querySelectorAll('.p'));
+        for(let i of p){
+            i.style.backgroundColor= "var(--light-grey)";
+            i.nextElementSibling.style.visibility='hidden';
+            i.previousElementSibling.style.visibility='hidden';
+
+        }
+        currentPlayer.style.backgroundColor='#fda214';
+        currentPlayer.nextElementSibling.style.visibility='visible';
+        currentPlayer.previousElementSibling.style.visibility='visible';
         console.log('current turn', this._turn);
+    }
+    playerRegisterer(){
+        // player registerer
+
+        this._score[this._turn] ?? this._score.push({'playerNumber': this._turn, 'score':0, 'attempts':0});
+        this._score[this._turn].attempts +=1;
     }
 
     scoreManager(){
         // responsible for player scoring
-         // to adjust for 0 base of arrays
-        this._score[this._turn] ?? this._score.push({'playerNumber': this._turn, 'score':0});
         this._score[this._turn].score +=1;
-        console.log(this._score, 'is the current score arr ')
+
+        // showing player scores in DOM
+        document.querySelector(`#plScore${this._turn}`).innerHTML=this._score[this._turn].score;
+
+        // console.log(this._score, 'is the current score arr ');
+
     }
+
+
+    
 
 }
 
-let icon=[[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18], ["<i class='fas fa-futbol'></i>", "<i class='fa-solid fa-anchor'></i>", '<i class="fa-solid fa-flask"></i>',
+let icon=[[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18], ['<i class="fas fa-futbol" aria-hidden="true"></i>', '<i class="fa-solid fa-anchor"></i>', '<i class="fa-solid fa-flask"></i>',
 '<i class="fa-solid fa-sun"></i>', '<i class="fa-solid fa-bug"></i>', '<i class="fa-regular fa-moon"></i>', '<i class="fa-solid fa-snowflake"></i>','<i class="fa-solid fa-turkish-lira-sign"></i>', '<i class="fa-solid fa-car"></i>' ]]
 
 // let game = new Memory();
@@ -207,7 +296,18 @@ function loadBoard(arr){
         for(let j=0; j<arr[i].length; j++){
         let T = document.createElement('div');
         T.innerHTML=arr[i][j];
-        T.classList.add('tile6');
+
+        // set tile Element size on board
+        if(arr.length==4){
+            T.classList.add('tile4');
+        }else{T.classList.add('tile6')}
+        
+        // if(arr[i][j]=='<div></div>'){ // to markout blunt values
+        //     T.classList.add('blunt');
+        // }
+
+        T.classList.add('blunt');
+
         tileElementArr[i] ?? tileElementArr.push([]);
         //console.log(tileElementArr)
         tileElementArr[i].push(T);
@@ -230,11 +330,90 @@ function display(arr){
         }
     }
 }
-function levelVar(st){
+function levelVar(st, difficulty=5){
+    // choose level of difficulty 
+    let n = Math.random();
+    let dif =n;
+
+    while(n<(difficulty/10)){  //avoiding zero prob
+        n=Math.random();
+        dif=n;
+        console.log(dif, 'thi is difficulty level');
+    } 
+    
     if(st=='numbers'){
-        return Math.floor(Math.random()*16); // to be tunned
+
+    return Math.floor(dif*16); // to be tunned
     }
-    return Math.floor(Math.random()*10);
+    return Math.floor(dif*10);
+
+
+}
+
+function setNumberOfPlayers(game, arr){
+        // game: game object
+        // arr: array of htmlcollection
+        // set the numbers of players in game
+    // console.log(arr, 'player num');
+    try{
+        for(let i of arr){
+            // console.log(typeof(parseInt(i.innerText)))
+            // console.log(i);
+            i.addEventListener('click', ()=>{
+                arr.forEach(e =>{e.classList.remove('iconClick')});
+                i.classList.add('iconClick');
+                game._numberOfPlayers = parseInt(i.innerText);
+                console.log(game._numberOfPlayers);
+    
+            })
+            
+        }
+        
+    }
+    catch{
+        console.log('please choose tile and number of players')
+    }
+
+    
+
+}
+
+// restarting game
+function restart(currentBoard){
+    //empties current board 
+    // and displays an new ones
+        let brd = document.querySelector('.board');
+        for(let i of currentBoard){
+            brd.removeChild(brd.firstChild)
+                
+        }
+        display(currentBoard);
+        console.log('Game retarted')
+        
+}
+
+function loadIcons(event, game, grid4, grid6, currentBoard, loadBoard, levelVar, display, tile){
+    try{
+        let gridSize = 4;
+        if(event.target.classList.contains('grid6')){
+            grid6.classList.add('iconClick');
+            grid4.classList.remove('iconClick');
+            gridSize=6;
+        }
+        else{
+            grid4.classList.add('iconClick');
+            grid6.classList.remove('iconClick');
+        }
+        currentBoard = [];
+        currentBoard = loadBoard(game.getBoard(gridSize, levelVar(tile)));
+        return display(currentBoard);
+    
+        }
+
+        catch{
+            console.log('must first choose tile');
+    }
+
 }
 
 
@@ -245,16 +424,21 @@ function levelVar(st){
 function GAME(){
     let game = new Memory();
     game._score.length=1; // mde score manager to work well
+    
+
 
     // choosing tile type
     let tile = '' // for detecting tyle type in gridload level setting
-    let iocnTile= document.querySelector('.icons');
+    let iconTile= document.querySelector('.icons');
     let numberTile = document.querySelector('.numbers');
-    iocnTile.addEventListener('click', ()=>{
+    iconTile.addEventListener('click', (event)=>{
+
+        iconTile.classList.add('iconClick');
         game.setTile(icon[1]);
         tile = 'icons';
     });
-    numberTile.addEventListener('click', ()=>{
+    numberTile.addEventListener('click', (event)=>{
+        iconTile.classList.remove('iconClick');
         game.setTile(icon[0]);
         tile='numbers'
     });
@@ -263,35 +447,25 @@ function GAME(){
     let grid4 = document.querySelector('.grid4');
     let grid6 = document.querySelector('.grid6');
     let currentBoard = [];
-
-    
-    grid4.addEventListener('click', ()=>{
-        currentBoard = loadBoard(game.getBoard(4, levelVar(tile)));
-        return display(currentBoard);
-    });
-
-    grid6.addEventListener('click', ()=>{
-        currentBoard = loadBoard(game.getBoard(6, levelVar(tile)));
-        return display(currentBoard);
-        });
+    grid4.addEventListener('click', (event)=>loadIcons(event, game, grid4, grid6, currentBoard, loadBoard, levelVar, display, tile));
+    grid6.addEventListener('click', (event)=>loadIcons(event,game, grid4, grid6, currentBoard, loadBoard, levelVar, display, tile));
 
     // start listening for moves
     document.querySelector('.begin').addEventListener('click', ()=>game.getMove());
     
     // Restarting game
-    document.querySelector('.restart') .addEventListener('click', ()=>{
-        let brd = document.querySelector('.board');
-        for(let i of currentBoard){
-            brd.removeChild(brd.firstChild)
-                
-        }
-        display(currentBoard);
-        console.log('Game retarted')
-    })
+    document.querySelector('.restart') .addEventListener('click', ()=> restart(currentBoard))
+
+    // setting the number of players
+    let playerNumber = document.querySelectorAll('.player')
+    setNumberOfPlayers(game, playerNumber);
+
     // Game logic
    game.gameLogic();
 
-    
+   
+
+
 }
 
 GAME()
@@ -300,7 +474,9 @@ GAME()
 
 document.querySelector('.begin').addEventListener('click', function board(){
     document.querySelector('body').className='body';
+    document.querySelector('.startEl').style.display='none';
     document.querySelector('.start').style.display='none';
+    
     document.querySelector('.gameBoard').style.display='block';
 });
 

@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
 
   <script src="https://kit.fontawesome.com/e36c94d9b3.js" crossorigin="anonymous"></script>
 
@@ -12,36 +15,42 @@
   <title>Frontend Mentor | Memory game</title>
 </head>
 <body>
-  <div class="start">
-    <!-- Game setup start -->
-    <div class="theme">
-      <div>Select Theme</div>
-      <div class="numbers">Numbers</div>
-      <div class="icons">Icons</div>
-    </div>
-    
-    
-    <div class="players">
-      <div>Number of Players</div>
-      <div class="int">
-        <div class="player p1" >1</div>
-        <div class="player p2">2</div>
-        <div class="player p3">3</div>
-        <div class="player p4">4</div>
-      </div>
-    </div>
+  <div class="startEl">
+    <div class="star" ><div>memory</div></div>
 
-    <div class="grid-size">
-      <div class="size">
-        <div class="grid grid4">4X4</div>
-        <div class="grid grid6">6X6</div>
-      </div>
-    </div>
-
-    <button class="begin"> Start Game</button>
+    <div class="start">
+      <!-- Game setup start -->
       
-  </div>
+      <div class="theme">
+        <div class="regular">Select Theme</div>
+        <div class="numbers">Numbers</div>
+        <div class="icons">Icons</div>
+      </div>
+      
+      
+      <div class="players">
+        <div class="regular">Number of Players</div>
+        <div class="int">
+          <div class="player p1" >1</div>
+          <div class="player p2">2</div>
+          <div class="player p3">3</div>
+          <div class="player p4">4</div>
+        </div>
+      </div>
   
+      <div class="gridSize">
+        <div class="regular">Grid Size</div>
+        <div class="size">
+          <div class="grid grid4">4X4</div>
+          <div class="grid grid6">6X6</div>
+        </div>
+      </div>
+  
+      <button class="begin"> Start Game</button>
+        
+    </div>
+    
+  </div>
 
   <!-- Game setup end -->
 
@@ -49,67 +58,72 @@
     <div class="playing">
         <!-- Game board start -->
     <div class="head">
-      <h2 class="headh2">memory</h2>
-      <div class="restart">Restart</div>
+      <div class="headdiv">memory</div>
+      <div class="reset">
+        <div class="restart">Restart</div>
       <div class="new-game">New Game</div>
+      </div>
     </div>
     
     <div class="board"> </div>
     <!-- Multiplayer scores start -->
-    <div class="player-el">
+    <div class="playerEl regular" >
       <div class="pl">
-        <div class="pl1">
-          Player 1
-        </div>
-        <div class="turn">
-          Current Turn
-        </div>
+        <div class="tip"></div>
+        <div class="pl1 p">
+          <div>Player 1</div>
           <!-- P1 score -->
-        <div class="plScore"></div>
-      </div>
-    
-    
-      <div class="pl">
-        <div class="pl2">
-          Player 2
+        <div id="plScore1">0</div>
         </div>
         <div class="turn">
           Current Turn
         </div>
+      </div>
+    
+    
+      <div class="pl">
+        <div class="tip"></div>
+        <div class="pl2 p">
+          <div>Player 2</div>
           <!-- P2 score -->
-        <div class="plScore"></div>
+        <div id="plScore2">0</div>
+        </div>
+        <div class="turn">
+          Current Turn
+        </div>
     
       </div>
     
     
     
       <div class="pl">
-        <div class="pl3">
-          Player 3
+        <div class="tip"></div>
+        <div class="pl3 p">
+          <div>Player 3</div>
+          <!-- P3 score -->
+        <div id="plScore3">0</div>
         </div>
         <div class="turn">
           Current Turn
         </div>
-          <!-- P3 score -->
-        <div class="plScore"></div>
     
       </div>
     
       <!-- P4 score -->
       <div class="pl">
-        <div class="pl4">
-          Player 4
+        <div class="tip"></div>
+        <div class="pl4 p">
+          <div> Player 4</div>
+          <div id="plScore4">0</div>
         </div>
         <div class="turn">
           Current Turn
         </div>
           <!-- P4 score -->
-        <div class="plScore"></div>
     
       </div>
     </div>
     
-  
     <div class="game-over">
       
       <!-- Multiplayer scores start -->

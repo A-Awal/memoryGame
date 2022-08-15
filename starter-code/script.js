@@ -10,6 +10,7 @@ class Memory {
         this._currentObj=[];
         this._turn =1;
         this._selected = 0;
+        this.currentBoard =[];
     }
     setscore(){
         this._score++;
@@ -78,31 +79,51 @@ class Memory {
         // set current move to user selected elements
         let brd = document.querySelector('.board');
         let brdEl = brd.children;
+
+        // let control = new AbortController();
+        // let signal = control.signal;
+
         //console.log(brdEl);
         for(let tile of brdEl){ 
             
             tile.addEventListener('click', ()=> {
-            this._currentMove.push(tile.innerHTML);
-            console.log(this._currentMove, 'this is the current move');
-            this._selected++;
+
+                if(this.pairCounter()==0){
+                    document.querySelector('.gameOver').style.display='flex';
+                    this.showScores();
+                }   
+
+                console.log(tile.classList);
+                if(tile.classList.contains('blunt')){
+                    tile.classList.toggle('markClick');
+                    if(tile.classList.contains('markClick')){
+                        try{
+                            this._currentMove.push(tile.innerHTML);
+                        // console.log(this._currentMove, 'this is the current move');
+                        this._selected++;
             
-            tile.classList.add('iconClick');
-            tile.classList.remove('blunt');
+                            
+            
+                     tile.classList.add('iconClick');
+
+                        } catch(e){}
+    
+                    }
+                    
+                }
+            
+            // tile.classList.remove('blunt');
 
             console.log(tile.innerHTML, 'iner of inner');
-            if(this._selected >2){
-                for(let e of brdEl){
-                    if(e.classList.contains('iconClick')){ // for setting selected to blunt
-                        // e.innerHTML= Object.values(this.setBlunt());
-                        this.pairCounter();
-                        // e.removeEventListener('click', )
-                        e.classList.remove('iconClick');
-                        // e.classList.add('blunt');
-                    }
+            if(this._selected >=2){
+                let brd=document.querySelector('.board');
+                let brdEl = brd.children;
                 
+            for(let i of brdEl){
 
-                    
-                };
+                i.classList.remove('markClick');
+            
+            }
                 this._selected =0;
             }
             
@@ -112,15 +133,57 @@ class Memory {
     
     }
 
+    showScores(){
+        document.querySelector('.mainStat').innerHTML='';
+        let rank = [];
+        let position = [];
+        let el = [];
+        for(let i=1; i<this._score.length; i++){
+            rank.push(this._score[i].score);
+            let mainDiv = document.createElement('div');
+            mainDiv.className='ex';
+            let divP = document.createElement('div');
+            let divPText = document.createTextNode(`Player ${i}`);
+            divP.appendChild(divPText);
+            // console.log(divP, 'this is divp');
+
+            let divScore = document.createElement('div');
+            let divScoreText = document.createTextNode(`${this._score[i].score} Pairs`);
+            divScore.appendChild(divScoreText);
+
+            mainDiv.appendChild(divP);
+            mainDiv.appendChild(divScore);
+            el.push(mainDiv);
+
+            document.querySelector('.mainStat').appendChild(mainDiv);
+        
+        }
+
+        rank.forEach((el, index, ar)=>{
+            let post = ar.length;
+           for(let i of ar){
+            if(el>=i){
+                post--;
+            }
+
+           }
+           position.push(post);
+        })
+        console.log(position, rank);
+    }
+
     pairCounter(){
         let brd=document.querySelector('.board');
         let brdEl = brd.children;
         let brdArr =[];
         let itar =[];
         for(let i of brdEl){
-            brdArr.push(i.innerText);
+            if(i.classList.contains('blunt')){
+                brdArr.push(i.innerText)
+            };
+            
         }
-        console.log(brdArr, 'brd arra')
+        // console.log(brdArr, 'brd arra')
         let pair = brdArr.reduce((last, curr, index, ar)=>{
             let valnum=0;
             // console.log('i am valnum', valnum)
@@ -132,7 +195,7 @@ class Memory {
                             
                                 if(curr == e){
                                     valnum++;
-                                    console.log(curr+"-"+ e +'-'+ valnum)
+                                    // console.log(curr+"-"+ e +'-'+ valnum)
     
                                 }
                             })
@@ -174,9 +237,11 @@ class Memory {
         return new Promise((resolve, reject)=>{
             let currentlength = 0;
             setInterval(()=>{
+
                 //console.log(this._currentMove, 'current array')
                currentlength = this._currentMove.length;
                if(currentlength==2){
+                
                 this.getObject();
                 console.log('resolved')
                 //this._currentMove=[];
@@ -185,7 +250,7 @@ class Memory {
                 resolve (this._currentObj.splice(0, 2));
                 
             }
-            }, 100)
+            }, 10)
 
                    
         })
@@ -211,16 +276,34 @@ class Memory {
         )
         .then((indexArr)=>{
             this.playerRegisterer();
+            let brd = document.querySelector('.board');
+                let brdEl = brd.children;
             // console.log(indexArr, 'this na index array');
             if(indexArr[0]==indexArr[1] ){
                 if(indexArr[0]<100){
                     this.scoreManager();
                     
                 }
+                // to remove blunts class from tile
+                
+                for(let e of brdEl){
+                    if(e.classList.contains('iconClick')){ 
+                        e.classList.remove('blunt')
+                        
+                    }
+                
+                };
+                this.pairCounter();
             }
-            // if(this.pairCounter==0){
-            //     console.log('Done bro. Game Over')
-            //    }
+            for(let e of brdEl){
+                if(e.classList.contains('iconClick')){ 
+                    
+                    e.classList.remove('iconClick')
+                    
+                }
+            
+            };
+
             this.turnManager(); //position is important
         }).then(()=>this.gameLogic())
 
@@ -249,6 +332,7 @@ class Memory {
         currentPlayer.previousElementSibling.style.visibility='visible';
         console.log('current turn', this._turn);
     }
+
     playerRegisterer(){
         // player registerer
 
@@ -317,7 +401,25 @@ function loadBoard(arr){
     return tileElementArr;
 }
 
-function display(arr){
+let timeControl = new AbortController();
+const {signal} = timeControl;
+
+function timeCounter(signal){
+    // for solo timer 
+    let start =  Date.now();
+    if(signal.abort()){
+
+    }else{setInterval(()=>{
+        console.log('responding bro!!!!');
+        let end = Date.now();
+        let milSec = end - start;
+        
+        document.querySelector('.min').innerHTML= Math.floor(milSec/60000);
+        document.querySelector('.sec').innerHTML= Math.floor(milSec/1000)%60;
+
+    }, 1000)}
+}
+function display(arr, game){
     // arr: array 
     // feeds it to the board
     let brd = document.querySelector('.board');
@@ -325,12 +427,40 @@ function display(arr){
     for(let i of arr){
         for(let j of i){
             //console.log(j);
-            //console.log(brd)
             brd.appendChild(j);
         }
     }
+    if(game._numberOfPlayers==1){
+        document.querySelector('.playerEl').style.display='none';
+        document.querySelector('.solo').style.display='flex';
+    }else{
+        document.querySelector('.solo').style.display='none';
+
+        let p =(document.querySelectorAll('.p'));
+        for(let i of p){
+            i.style.backgroundColor= "var(--light-grey)";
+            i.nextElementSibling.style.visibility='hidden';
+            i.previousElementSibling.style.visibility='hidden';
+
+        }
+        
+        let firstPlayer = document.querySelector('.pl1');
+    
+        firstPlayer.style.backgroundColor= "var(--yello)";
+        firstPlayer.nextElementSibling.style.visibility='visible';
+        firstPlayer.previousElementSibling.style.visibility='visible';
+
+        
+        for(let i=1; i<5; i++){
+            document.querySelector(`#plScore${i}`).innerHTML=0;
+        }
+    }
+    document.querySelector('.gameOver').style.display='none';
+
+
+    
 }
-function levelVar(st, difficulty=5){
+function levelVar(st, difficulty=3){
     // choose level of difficulty 
     let n = Math.random();
     let dif =n;
@@ -379,18 +509,75 @@ function setNumberOfPlayers(game, arr){
 }
 
 // restarting game
-function restart(currentBoard){
+function restart(game){
     //empties current board 
     // and displays an new ones
-        let brd = document.querySelector('.board');
-        for(let i of currentBoard){
-            brd.removeChild(brd.firstChild)
-                
+        for(let i=1; i<game._score.length; i++){
+            game._score[i].score=0;
         }
-        display(currentBoard);
+        game._turn=1;
+        // making blunt
+        let brd = document.querySelector('.board');
+        brd.innerHTML='';
+        for(let i of game.currentBoard){
+            for(let j of i){
+                j.classList.add('blunt');
+            }
+        }
+
+        console.log(game.currentBoard);
+        display(game.currentBoard, game);
         console.log('Game retarted')
         
 }
+
+function newGame(){
+    // GameController.abort();
+    let brd = document.querySelector('.board');
+        brd.innerHTML='';
+    document.querySelector('body').classList.remove('body');
+    document.querySelector('.startEl').style.display='block';
+    document.querySelector('.start').style.display='flex';
+    
+    document.querySelector('.gameBoard').style.display='none';
+    // REVERTING ELEMENT COLORS
+    document.querySelector('.p1').style.backgroundColor='var(--dark-grey)';
+    for(let i=2; i<5; i++){
+        document.querySelector(`.p${i}`).style.backgroundColor='var(--light-grey)';
+    }
+
+
+    document.querySelector('.numbers').style.backgroundColor ='var(--dark-grey)';
+    document.querySelector('.icons').style.backgroundColor ='var(--light-grey)';
+
+    
+    document.querySelector('.grid4').classList.remove('iconClick');
+    document.querySelector('.grid6').classList.remove('iconClick');
+
+    document.querySelector('.grid4').addEventListener('click', (event)=>helpL(event));
+    document.querySelector('.grid6').addEventListener('click', (event)=>helpL(event))
+
+
+
+    function helpL(event){
+        let grid4 = document.querySelector('.grid4');
+        let grid6 = document.querySelector('.grid6');
+        if(event.target.classList.contains('grid6')){
+            grid6.classList.add('iconClick');
+            grid4.classList.remove('iconClick');
+            gridSize=6;
+        }
+        else{
+            grid4.classList.add('iconClick');
+            grid6.classList.remove('iconClick');
+        }
+    }
+
+
+}
+
+
+
 
 function loadIcons(event, game, grid4, grid6, currentBoard, loadBoard, levelVar, display, tile){
     try{
@@ -405,8 +592,10 @@ function loadIcons(event, game, grid4, grid6, currentBoard, loadBoard, levelVar,
             grid6.classList.remove('iconClick');
         }
         currentBoard = [];
+        
         currentBoard = loadBoard(game.getBoard(gridSize, levelVar(tile)));
-        return display(currentBoard);
+        game.currentBoard=currentBoard;
+        return display(currentBoard, game);
     
         }
 
@@ -415,6 +604,8 @@ function loadIcons(event, game, grid4, grid6, currentBoard, loadBoard, levelVar,
     }
 
 }
+
+
 
 
 
@@ -451,20 +642,33 @@ function GAME(){
     grid6.addEventListener('click', (event)=>loadIcons(event,game, grid4, grid6, currentBoard, loadBoard, levelVar, display, tile));
 
     // start listening for moves
-    document.querySelector('.begin').addEventListener('click', ()=>game.getMove());
+    document.querySelector('.begin').addEventListener('click', ()=>{
+        if(game._numberOfPlayers==1){
+            timeCounter();
+        }
+        game.getMove();
+    });
+
     
     // Restarting game
-    document.querySelector('.restart') .addEventListener('click', ()=> restart(currentBoard))
+    for(let i of document.querySelectorAll('.restart')){
+        i.addEventListener('click', ()=> {
+            restart(game);
+     
+         })
+    } 
 
     // setting the number of players
-    let playerNumber = document.querySelectorAll('.player')
+    let playerNumber = document.querySelectorAll('.player');
     setNumberOfPlayers(game, playerNumber);
 
     // Game logic
    game.gameLogic();
 
-   
+    // halting and 
+    
 
+   
 
 }
 
@@ -480,3 +684,11 @@ document.querySelector('.begin').addEventListener('click', function board(){
     document.querySelector('.gameBoard').style.display='block';
 });
 
+// new game
+for(let i of document.querySelectorAll('.newGame')){
+    i.addEventListener('click', ()=> {
+        newGame();
+ 
+     })
+} 
+// document.querySelector('.newGame').addEventListener('click', ()=>{});

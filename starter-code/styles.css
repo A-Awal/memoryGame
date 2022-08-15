@@ -242,10 +242,10 @@ body{
             background-color:var(--yello);
         }
 
-        .new-game{
+        .newGame{
             background-color: var(--light-grey);
         }
-        .restart, .new-game{
+        .restart, .newGame{
             border-radius: 50px;
             height: 100%;
             padding: 1% 10% ;
@@ -262,7 +262,6 @@ body{
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: space-between;
-
     }
 
     .playerEl{
@@ -288,7 +287,7 @@ body{
     }
     
     
-    .pl1, .pl2, .pl3, .pl4{
+    .pl1, .pl2, .pl3, .pl4, .time, .moves{
         width: 100%;
         height: 55%;
         background-color: var(--light-grey);
@@ -310,8 +309,23 @@ body{
             font-size: 13px;
         }
 
-.game-over{
-    display:none
+
+.solo{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 50%;
+    height:9%;
+
+    background-color: aqua;
+}
+.time, .moves{
+    width: 40%;
+    height: 100%;
+}
+
+.gameOver{
+    
 }
 
 .tile6{
@@ -321,9 +335,10 @@ body{
     color: var(--white);
 }
 .tile4{
-    width: 25%;
-    height: 25%;
+    width: 23%;
+    height: 23%;
     border-radius: 50%;
+    
     color: var(--white);
 }
 .tile4, .tile6{
@@ -331,6 +346,8 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+    /* margin: 0.3%; */
+    box-sizing: border-box;
 }
 /* .tile4:active, .tile6:active{
     background-color: var(--yello);
@@ -342,6 +359,11 @@ body{
 
 .blunt{
     background-color: var(--dark-grey);
+    color: var(--dark-grey);
+}
+
+.markClick{  /*leave this class useful in js */
+    
 }
 
 
@@ -355,3 +377,75 @@ body{
 
 }
 
+/* Game over */
+body{
+    /* background-color: aliceblue; */
+}
+/* .playerEl, .startEl, .head{display: none;} */
+.gameBoard{
+    /* display: block; */
+}
+
+.gameOver{
+    display: none;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(154, 151, 151, 0.418);
+    
+
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+}
+
+    .multiplayerStat{
+        
+        width: 64vw;
+        height: 67vh;
+        /* background-color: aqua; */
+        border-radius: 20px;
+        box-sizing: border-box;
+
+        padding: 2%;
+
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+    }
+        .mainStat{
+            width: 82%;
+            height: 63%;
+            /* background-color: #f1e3ce; */
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+            .ex{
+                width: 100%;
+                height: 21%;
+                background-color: black;
+                border-radius: 10px;
+
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .anotherGame{
+                width: 82%;
+                height: 7%;
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .restart{
+                /* background-color: var(--light-grey); */
+            }
+
+            .newGame{
+                /* background-color: var(--yello); */
+            }

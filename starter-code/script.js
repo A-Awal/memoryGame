@@ -134,9 +134,27 @@ class Memory {
     }
 
     showScores(){
-        document.querySelector('.mainStat').innerHTML='';
+        let mainStat= document.querySelector('.mainStat');
+        let multiPlayer = document.querySelector('.mult');
+        let solo= document.querySelector('.soloStat');
+        mainStat.innerHTML='';
+
+        if(this._numberOfPlayers==1){ //solo game-Over
+            solo.style.display='flex';
+            multiPlayer.style.display='none';
+
+            let moves = document.querySelector(".moves.ex");
+            moves.innerHTML=`Moves ${this._score[1].attempts}`
+            // let pairs = document.createAttribute('p');
+            // pairs.innerHTML= ;
+            // moves.appendChild(pairs);
+
+        }else{
+        solo.style.display='none';
+        multiPlayer.style.display='flex';
+            
         let rank = [];
-        let position = [];
+        // let position = [];
         let el = [];
         for(let i=1; i<this._score.length; i++){
             rank.push(this._score[i].score);
@@ -155,22 +173,57 @@ class Memory {
             mainDiv.appendChild(divScore);
             el.push(mainDiv);
 
-            document.querySelector('.mainStat').appendChild(mainDiv);
+            
         
         }
 
-        rank.forEach((el, index, ar)=>{
-            let post = ar.length;
-           for(let i of ar){
-            if(el>=i){
-                post--;
-            }
+        // rank.forEach((el, index, ar)=>{
+        //     let post = ar.length;
+        //    for(let i of ar){
+        //     if(el>=i){
+        //         post--;
+        //     }
 
-           }
-           position.push(post);
-        })
-        console.log(position, rank);
+        //    }
+        //    position.push(post);
+        // })
+        // console.log(position, rank);
+
+        rank= rank.sort((a, b)=>a-b);
+        let noMax = 0;  //to count winners
+        mainStat.innerHTML='';
+
+        for(let i of el){  // For adding winners
+            if(i.lastChild.innerHTML.slice(0,1) >= Math.max(...rank)){
+                let s = document.createElement('span');
+                s.innerHTML='{winner}';
+                i.insertBefore(s, i.lastElementChild);
+                i.style.backgroundColor='black';
+                mainStat.appendChild(i);
+            }
+            noMax++;
+        }
+
+        rank= rank.slice(noMax); // to remove winners
+
+        for(let i of el){  // for adding others 
+            if(i.lastChild.innerHTML.slice(0,1) >= Math.max(...rank)){
+                document.querySelector('.mainStat').appendChild(i);
+            }
+            rank = rank.slice(1);
+        }
+
+        // for adding heading
+        if(noMax>1){
+            document.querySelector('.hail').innerHTML=`It's a tie!`
+        }else{
+            let wNo = document.querySelector('.mainStat').firstElementChild.innerHTML.slice(-1);
+            document.querySelector('.hail').innerHTML=`Player ${wNo} Wins!`
+        }
+
+        }
     }
+
 
     pairCounter(){
         let brd=document.querySelector('.board');
@@ -319,6 +372,11 @@ class Memory {
         }
 
         let currentPlayer = document.querySelector(`.pl${this._turn}`);
+
+        if(this._numberOfPlayers==1){ // showing attempts for a single player
+            let moves = document.querySelector('.moves');
+            moves.innerHTML= `${this._score[1].attempts} attempts`;
+        }
         
         let p =(document.querySelectorAll('.p'));
         for(let i of p){
@@ -404,20 +462,21 @@ function loadBoard(arr){
 let timeControl = new AbortController();
 const {signal} = timeControl;
 
-function timeCounter(signal){
+function timeCounter(){
     // for solo timer 
     let start =  Date.now();
-    if(signal.abort()){
 
-    }else{setInterval(()=>{
+
+    setInterval(()=>{
         console.log('responding bro!!!!');
         let end = Date.now();
         let milSec = end - start;
         
         document.querySelector('.min').innerHTML= Math.floor(milSec/60000);
         document.querySelector('.sec').innerHTML= Math.floor(milSec/1000)%60;
+        
 
-    }, 1000)}
+    }, 1000)
 }
 function display(arr, game){
     // arr: array 

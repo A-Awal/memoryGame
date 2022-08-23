@@ -16,25 +16,25 @@
 </head>
 <body>
   <div class="startEl">
-    <div class="star" ><div>memory</div></div>
+    <div class="star h1" ><div>memory</div></div>
 
     <div class="start">
       <!-- Game setup start -->
       
       <div class="theme">
         <div class="regular">Select Theme</div>
-        <div class="numbers">Numbers</div>
-        <div class="icons">Icons</div>
+        <div class="numbers h3">Numbers</div>
+        <div class="icons h3">Icons</div>
       </div>
       
       
       <div class="players">
         <div class="regular">Number of Players</div>
         <div class="int">
-          <div class="player p1" >1</div>
-          <div class="player p2">2</div>
-          <div class="player p3">3</div>
-          <div class="player p4">4</div>
+          <div class="player p1 h3" >1</div>
+          <div class="player p2 h3">2</div>
+          <div class="player p3 h3">3</div>
+          <div class="player p4 h3">4</div>
         </div>
         
       </div>
@@ -42,12 +42,12 @@
       <div class="gridSize">
         <div class="regular">Grid Size</div>
         <div class="size">
-          <div class="grid grid4">4X4</div>
-          <div class="grid grid6">6X6</div>
+          <div class="grid grid4 h3">4X4</div>
+          <div class="grid grid6 h3">6X6</div>
         </div>
       </div>
   
-      <button class="begin"> Start Game</button>
+      <button class="begin h2"> Start Game</button>
         
     </div>
     
@@ -59,11 +59,12 @@
     <div class="playing">
         <!-- Game board start -->
     <div class="head">
-      <div class="headdiv">memory</div>
+      <div class="headdiv h2">memory</div>
       <div class="reset">
-        <div class="restart">Restart</div>
-      <div class="newGame">New Game</div>
+        <div class="restart h3">Restart</div>
+        <div class="newGame h3">New Game</div>
       </div>
+      <button class="menu h3">Menu</button>
     </div>
     
     <div class="board"> </div>
@@ -72,9 +73,9 @@
       <div class="pl">
         <div class="tip"></div>
         <div class="pl1 p">
-          <div>Player 1</div>
+          <div><span  class="span1 h3">Player 1</span><span class="span2 h3">P1</span></div>
           <!-- P1 score -->
-        <div id="plScore1">0</div>
+        <div id="plScore1" class="h2">0</div>
         </div>
         <div class="turn">
           Current Turn
@@ -85,9 +86,9 @@
       <div class="pl">
         <div class="tip"></div>
         <div class="pl2 p">
-          <div>Player 2</div>
+          <div><span  class="span1 h3">Player 2</span><span class="span2 h3">P2</span></div>
           <!-- P2 score -->
-        <div id="plScore2">0</div>
+        <div id="plScore2" class="h2">0</div>
         </div>
         <div class="turn">
           Current Turn
@@ -100,9 +101,9 @@
       <div class="pl">
         <div class="tip"></div>
         <div class="pl3 p">
-          <div>Player 3</div>
+        <div><span  class="span1 h3">Player 3</span><span class="span2 h3">P3</span></div>
           <!-- P3 score -->
-        <div id="plScore3">0</div>
+        <div id="plScore3" class="h2">0</div>
         </div>
         <div class="turn">
           Current Turn
@@ -114,8 +115,8 @@
       <div class="pl">
         <div class="tip"></div>
         <div class="pl4 p">
-          <div> Player 4</div>
-          <div id="plScore4">0</div>
+          <div> <span  class="span1 h3">Player 4</span><span class="span2 h3">P4</span></div>
+          <div id="plScore4" class="h2">0</div>
         </div>
         <div class="turn">
           Current Turn
@@ -129,9 +130,14 @@
     <div class="solo">
       <div class="time">
         <div>Time</div>
-        <div class="min">0</div>:<div class="sec">00</div>
+        <div>
+          <span class="min">0</span>:<span class="sec">00</span>
+        </div>
       </div>
-      <div class="moves"></div>
+      <div class="moveEl">
+        <div>attempts</div>
+        <div class="moves"></div>
+      </div>
     </div>
 
     
@@ -139,11 +145,11 @@
       
       <!-- Multiplayer scores start -->
       <div class="stat multiplayerStat">
+        <div class="comment com1">
+          <h2 class="hail">plaY .. WINS</h2>
+          <p>Game over! here are the results...</p>
+        </div>
         <div class="mult">
-          <div class="comment">
-            <h1 class="hail">plaY .. WINS</h1>
-            <p>Game over! here are the results...</p>
-          </div>
           <div class="mainStat">
             <!-- <div class="ex">
               <div class="plno">rtah</div>
@@ -155,12 +161,12 @@
      <div class="stat soloStat">
       <div class="comment">
         <h2>You did it!</h2>
-        <p>Here are your Results</p>
+        <p>Game Over! Here's how you got on...</p>
       </div>
       <!-- Time elapsed -->
-      <div class="time ex">  Time </div>
+      <div class="time ex">  <div>Time Ellapsed</div> </div>
         <!-- Moves total -->
-      <div class="moves ex">Moves</div>
+      <div class="moves ex"><div>Moves Taken</div></div>
     </div>
         <div class="anotherGame">
           <div class="restart">Restart</div>

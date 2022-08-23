@@ -213,8 +213,9 @@ body{
 
 .playing{
     position: absolute;
-    width: 100vh;
-    height: 95vh;
+    /* width: 100vh; */
+    width: 77vw;
+    height: 90vh;
 
     top: 50%;
     left: 50%;
@@ -541,25 +542,25 @@ body{
 
         }
 
-@media screen and (max-width: 1024px){
+@media screen and (max-width: 768px){
     .startEl{
         width: 85vw;
-        height: 89vw;
+        height: 67vh;
     }
 
     .playing{
         width: 90vw;
-        height: 123vw;
+        height: 93vh;
     }
 
     .board{
         width: 75vw;
-        height: 75vw;
+        height: 75vw;   
     }
 
     .multiplayerStat{
         width: 85vw;
-        height: 93vw;
+        height: 67vh;
     }
 
     .p{
@@ -581,12 +582,12 @@ body{
 @media screen and (max-width: 375px){
     .startEl{
         width: 87.2vw;
-        height: 126vw;
+        height: 71vh;
     }
 
     .playing{
         width: 92vw;
-        height: 165vw;
+        height: 93vh;
     }
 
     .board{
@@ -596,7 +597,7 @@ body{
 
     .multiplayerStat{
         width: 87.2vw;
-        height: 103vw;
+        height: 73vh;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -659,25 +660,20 @@ body{
         
     }
     .head{
-        --close:none;
-        --closemenu:flex;
-
+        
         display: flex;
         justify-content: space-between;
+        height: fit-content;
     }
-    .head:hover{
-        --close:flex;
-        --closemenu: none;
-    }
-    
+        
     .reset{
         flex-direction: column;
         justify-content: space-between;
         align-items: flex-end;
-        display: var(--close);
+        display: none;
     }
     .menu{
-        display: var(--closemenu);
+        display: flex;
         justify-content: center;
         align-items: center;
         background-color: var(--yello);
@@ -686,13 +682,17 @@ body{
         border: 0 solid;
         
     }
+
+    
     .reset .newGame, .reset .restart{
         height: fit-content;
         width: 150px;
         padding: 0;
         margin: 1px 0;
     }
+    .newGame{
 
+    }
     .span2{
         display: inline;
     }
@@ -705,4 +705,17 @@ body{
     }
 
    
+}
+
+@media screen and (max-width: 595px) {
+    .anotherGame{
+        flex-direction: column;
+        height: 23%;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .anotherGame .restart, .anotherGame .newGame{
+        width: 100%;
+        height: 40%;
+    }
 }

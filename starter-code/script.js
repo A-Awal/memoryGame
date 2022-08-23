@@ -70,21 +70,24 @@ class Memory {
 
     getMove(){
         // set current move to user selected elements
+        // also adds the iconClick class to the selected elements
+        //Show the gameOver
         let brd = document.querySelector('.board');
         let brdEl = brd.children;
 
 
         //console.log(brdEl);
         for(let tile of brdEl){ 
-            
+            // Listening for user imputs
             tile.addEventListener('click', ()=> {
 
-                if(this.pairCounter()==0){
+                // showing gameOver method
+                if(this.pairCounter()==0){ 
                     document.querySelector('.gameOver').style.display='flex';
                     this.showScores();
                 }   
 
-                console.log(tile.classList);
+                // console.log(tile.classList);
                 if(tile.classList.contains('blunt')){
                     tile.classList.toggle('markClick');
                     if(tile.classList.contains('markClick')){
@@ -95,18 +98,15 @@ class Memory {
             
                             
             
-                     tile.classList.add('iconClick');
+                     tile.classList.add('iconClick'); // marking user selection
 
                         } catch(e){}
     
                     }
                     
                 }
-            
-            // tile.classList.remove('blunt');
-
-            console.log(tile.innerHTML, 'iner of inner');
-            if(this._selected >=2){
+            // removing the yellow marks of recently selected pair
+            if(this._selected >=2){ 
                 let brd=document.querySelector('.board');
                 let brdEl = brd.children;
                 
@@ -115,6 +115,7 @@ class Memory {
                 i.classList.remove('markClick');
             
             }
+            // cleaning the recently selected pair array 
                 this._selected =0;
             }
             
@@ -128,14 +129,15 @@ class Memory {
         let mainStat= document.querySelector('.mainStat');
         let multiPlayer = document.querySelector('.mult');
         let solo= document.querySelector('.soloStat');
-        mainStat.innerHTML='';
+        mainStat.innerHTML=''; 
 
         if(this._numberOfPlayers==1){ //solo game-Over
-
+            // close multiplayer stat elements
             solo.style.display='flex';
             multiPlayer.style.display='none';
             document.querySelector('.com1').style.display='none';
 
+            // adding reords of players
             let moves = document.querySelector(".moves.ex");
             let attempts = document.createElement('h2');
 
@@ -149,7 +151,7 @@ class Memory {
             time.appendChild(timeRep);
             
         }else{
-
+            // Multiplayer GamOver
         solo.style.display='none';
         multiPlayer.style.display='flex';
         document.querySelector('.com1').style.display='flex';
@@ -157,6 +159,7 @@ class Memory {
             
         let rank = [];
         let el = [];
+        // creating player records
         for(let i=1; i<this._score.length; i++){
             rank.push(this._score[i].score);
             let mainDiv = document.createElement('div');
@@ -164,7 +167,6 @@ class Memory {
             let divP = document.createElement('div');
             let divPText = document.createTextNode(`Player ${i}`);
             divP.appendChild(divPText);
-            // console.log(divP, 'this is divp');
 
             let divScore = document.createElement('div');
             let divScoreText = document.createTextNode(`${this._score[i].score} Pairs`);
@@ -174,11 +176,11 @@ class Memory {
             mainDiv.appendChild(divScore);
             el.push(mainDiv);
 
-            
-        
         }
 
-        
+        // Ranking players by scores
+        // First ranks scores and then
+        // appends records by scores
 
         rank= rank.sort((a, b)=>b-a);
         let noMax = 0;  //to count winners
@@ -189,8 +191,8 @@ class Memory {
             i.style.margin='.5%'
             if(parseInt(i.lastElementChild.innerHTML.slice(0,1)) == Math.max(...rank)){
                 let s = document.createElement('span');
-                s.innerHTML='{winner}';
-                i.insertBefore(s, i.lastElementChild);
+                s.innerHTML='    {winner}';
+                i.firstChild.appendChild(s);
                 i.classList.add('winner');
                 mainStat.appendChild(i);
                 noMax++;
@@ -217,7 +219,8 @@ class Memory {
         if(noMax>1){
             document.querySelector('.hail').innerHTML=`It's a tie!`
         }else{
-            let wNo = document.querySelector('.mainStat').firstElementChild.firstElementChild.innerText.slice(-1);
+            // console.log(document.querySelector('.mainStat').firstElementChild.firstElementChild.innerText)
+            let wNo = document.querySelector('.mainStat').firstElementChild.firstElementChild.innerText.slice(7,8);
             document.querySelector('.hail').innerHTML=`Player ${wNo} Wins!`
         }
 
@@ -226,29 +229,30 @@ class Memory {
 
 
     pairCounter(){
+        // calc. the remaining pairs tile or remaining moves
+        // note this was engineered for the first design;
         let brd=document.querySelector('.board');
         let brdEl = brd.children;
         let brdArr =[];
         let itar =[];
         for(let i of brdEl){
             if(i.classList.contains('blunt')){
-                brdArr.push(i.innerText)
+                brdArr.push(i.innerHTML)
             };
             
         }
-        // console.log(brdArr, 'brd arra')
+        // console.log(brdArr, 'array for for pair accounting')
         let pair = brdArr.reduce((last, curr, index, ar)=>{
             let valnum=0;
             // console.log('i am valnum', valnum)
                 if(curr!='<div></div>' && curr!=""){
                     if(!itar.includes(curr)){
-                        itar.push(curr);
+                        itar.push(curr); 
                         if(itar.includes(curr)){
                             ar.slice(index).forEach((e)=>{
                             
                                 if(curr == e){
                                     valnum++;
-                                    // console.log(curr+"-"+ e +'-'+ valnum)
     
                                 }
                             })
@@ -271,6 +275,7 @@ class Memory {
         let tileIndex = this._currentMove.reduce((last, el)=>{
             for(let tile of this._tiles){
                 if(Object.values(tile).flat()==el){
+                    // console.log(tile, 'check excess classes')
                     last.push(tile);
                     return last;
                 }
@@ -289,15 +294,12 @@ class Memory {
         return new Promise((resolve, reject)=>{
             let currentlength = 0;
             setInterval(()=>{
-
                 //console.log(this._currentMove, 'current array')
                currentlength = this._currentMove.length;
                if(currentlength==2){
                 
                 this.getObject();
                 console.log('resolved')
-                //this._currentMove=[];
-                // console.log(this._currentObj, 'this what is not working');
                 
                 resolve (this._currentObj.splice(0, 2));
                 
@@ -309,11 +311,15 @@ class Memory {
     }
 
     gameLogic(){
+        // takes the obj. of current move creates an array of of its indices;
+        // compare Equality and scores the player 
+        // Auxilliary functions include removing classes to show pair
+        // and switching players
         this.moveOperation().then(
             currentMoveObj =>{
                 this._currentMove=[];
 
-                console.log(currentMoveObj, 'current move obj')
+                // console.log(currentMoveObj, 'current move obj')
                 let indexArr = currentMoveObj.reduce((last, cur)=>{
                     for(let i in cur){
                         last.push(i);
@@ -364,7 +370,7 @@ class Memory {
                 }
             
             };
-
+            // switching to the next player
             this.turnManager(); //position is important
         }).then(()=>this.gameLogic())
 
@@ -400,7 +406,7 @@ class Memory {
     }
 
     playerRegisterer(){
-        // player registerer
+        // player registerer creates an object for selected players
 
         this._score[this._turn] ?? this._score.push({'playerNumber': this._turn, 'score':0, 'attempts':0});
         this._score[this._turn].attempts +=1;
@@ -451,10 +457,6 @@ function loadBoard(arr){
         if(arr.length==4){
             T.classList.add('tile4');
         }else{T.classList.add('tile6')}
-        
-        // if(arr[i][j]=='<div></div>'){ // to markout blunt values
-        //     T.classList.add('blunt');
-        // }
 
         T.classList.add('blunt');
 
@@ -468,35 +470,19 @@ function loadBoard(arr){
 }
 
 
-
-// function timeCounter(){
-//     // for solo timer 
-//     let start =  Date.now();
-
-
-//     setInterval(()=>{
-//         console.log('responding bro!!!!');
-//         let end = Date.now();
-//         let milSec = end - start;
-        
-//         document.querySelector('.min').innerHTML= Math.floor(milSec/60000);
-//         document.querySelector('.sec').innerHTML= Math.floor(milSec/1000)%60;
-        
-
-//     }, 1000)
-// }
-
-let sint; // leave this 
+let sint; // leave this = setinterval id
 
 function display(arr, game){
+    // A work horse 
     // arr: array 
-    // feeds it to the board
+    // feeds the array to the board visually
+    // responsible for player record cleansing btm games
+    // becareful soloTimer() jealous of its position can't explain thorougly;
+
     
     let brd = document.querySelector('.board');
     
     brd.innerHTML='';// to cleanse board 
-
-    
 
     for(let i of arr){
         for(let j of i){
@@ -507,22 +493,27 @@ function display(arr, game){
     if(game._numberOfPlayers==1){
         document.querySelector('.playerEl').style.display='none';
         document.querySelector('.solo').style.display='flex';
+        //Starting timer
+
         let start = Date.now();
         soloTimer(start);
         let moves = document.querySelector('.moves');
         moves.innerHTML= `0`;
-        
-        game._score[1].attempts=0;
-        game._score[1].score=0;
+
+        //Cleansing records
+        // game._score[1].attempts=0;
+        // game._score[1].score=0;
 
         let movesR = document.querySelector(".moves.ex h2");
-        movesR ??= movesR.innerHTML='';
         let time = document.querySelector(".time.ex h2");
+        // movesR ??= movesR.innerHTML='';
+        movesR.innerHTML='';
         time.innerHTML='';
 
 
 
     }else{
+        //Multiplayer setting 
         document.querySelector('.playerEl').style.display='flex';
 
         document.querySelector('.solo').style.display='none';
@@ -548,18 +539,25 @@ function display(arr, game){
 
     }
 
-    for(let i=1; i<game._score.length; i++){ //to clear Scores
-        game._score[i].attempts=0;
-
-    }
-
-    document.querySelector('.gameOver').style.display='none';
-
-    // document.querySelector('.mainStat');
-    document.querySelector('.mult').style.display='none';
-    document.querySelector('.soloStat').style.display='none';
+    
 
 }
+
+function closingRecords(game){
+    try{
+        for(let i=1; i<game._score.length; i++){ //to clear Scores
+            game._score[i].attempts=0;
+            game.score[i].score=0;
+        }
+    
+        document.querySelector('.gameOver').style.display='none';
+    
+        // document.querySelector('.mainStat');
+        document.querySelector('.mult').style.display='none';
+        document.querySelector('.soloStat').style.display='none';
+    } catch(e){alert(e)}
+}
+
 function levelVar(st, difficulty=3){
     // choose level of difficulty 
     let n = Math.random();
@@ -587,8 +585,6 @@ function setNumberOfPlayers(game, arr){
     // console.log(arr, 'player num');
     try{
         for(let i of arr){
-            // console.log(typeof(parseInt(i.innerText)))
-            // console.log(i);
             i.addEventListener('click', ()=>{
                 arr.forEach(e =>{
                     e.classList.remove('startClick');
@@ -598,7 +594,7 @@ function setNumberOfPlayers(game, arr){
                 i.style.backgroundColor='';
                 // console.log(i, 'you clicked me', i.classList, i.style.backgroundColor);
                 game._numberOfPlayers = parseInt(i.innerText);
-                console.log(game._numberOfPlayers);
+                // console.log(game._numberOfPlayers);
     
             })
             
@@ -632,16 +628,22 @@ function restart(game){
             }
         }
 
-        console.log(game.currentBoard);
+        // console.log(game.currentBoard);
         display(game.currentBoard, game);
-        console.log('Game retarted');
-        
+        // console.log('Game retarted');
+        closingRecords(game);
 }
 
-function newGame(){
-    clearInterval(sint);
+function newGame(game){
+    // gives a new game
 
-    // GameController.abort();
+
+    //Clear solotime counter
+    clearInterval(sint);
+    closingRecords(game);
+    game._numberOfPlayers=4;
+
+
     let brd = document.querySelector('.board');
         brd.innerHTML='';
     document.querySelector('body').classList.remove('body');
@@ -649,6 +651,7 @@ function newGame(){
     document.querySelector('.start').style.display='flex';
     
     document.querySelector('.gameBoard').style.display='none';
+
     // REVERTING ELEMENT COLORS
     document.querySelector('.p1').classList.remove('startClick');
     for(let i=2; i<5; i++){
@@ -725,7 +728,19 @@ function loadIcons(event, game, grid4, grid6, currentBoard, loadBoard, levelVar,
 
 }
 
-
+function soloTimer(start){
+    // for solo timer 
+    sint = setInterval(()=>{ 
+    console.log('responding bro!!!!');
+    let end = Date.now();
+    let milSec = end - start;
+    
+    document.querySelector('.min').innerHTML= Math.floor(milSec/60000);
+    document.querySelector('.sec').innerHTML= Math.floor(milSec/1000)%60;
+    }, 1000)
+    
+    
+}
 
 
 
@@ -733,13 +748,8 @@ function loadIcons(event, game, grid4, grid6, currentBoard, loadBoard, levelVar,
 
 // MAIN GAME
 
-let main_Game_Controler= 0;
-
 function GAME(){
-    if(main_Game_Controler !== 0){
-        return;
-    }else{
-        let game = new Memory();
+    let game = new Memory();
     game._score.length=1; // mde score manager to work well
     
 
@@ -755,6 +765,7 @@ function GAME(){
         game.setTile(icon[1]);
         tile = 'icons';
     });
+
     numberTile.addEventListener('click', (event)=>{
         iconTile.classList.remove('startClick');
         numberTile.classList.add('startClick');
@@ -793,17 +804,8 @@ function GAME(){
     // Game logic
    game.gameLogic();
 
-    // halting and 
-    
 
-   
-    }
-
-}
-
-GAME()
-
-// the code below is for switching between start screen and board
+   // the code below is for switching between start screen and board
 
 document.querySelector('.begin').addEventListener('click', function board(){
     document.querySelector('body').className='body';
@@ -816,26 +818,28 @@ document.querySelector('.begin').addEventListener('click', function board(){
 // new game
 for(let i of document.querySelectorAll('.newGame')){
     i.addEventListener('click', ()=> {
-        newGame();
+        newGame(game);
         
- 
      })
-} 
-// document.querySelector('.newGame').addEventListener('click', ()=>{});
-
-// soloTimer(start)();
-
-function soloTimer(start){
-    // for solo timer 
-    sint = setInterval(()=>{ 
-    console.log('responding bro!!!!');
-    let end = Date.now();
-    let milSec = end - start;
-    
-    document.querySelector('.min').innerHTML= Math.floor(milSec/60000);
-    document.querySelector('.sec').innerHTML= Math.floor(milSec/1000)%60;
-    }, 1000)
-    
-    
 }
+
+let mobile = window.matchMedia(('max-width:375'));
+
+let menu = document.querySelector('.menu');
+let reset = document.querySelector('.reset');
+
+    menu.addEventListener('click', ()=>{
+        reset.style.display='flex';
+        menu.style.display='none';
+    });
+
+    reset.addEventListener('mouseleave',()=>{
+        reset.style.display='none';
+        menu.style.display='flex';
+    })
+
+}
+
+GAME()
+
 

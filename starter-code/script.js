@@ -74,51 +74,57 @@ class Memory {
         //Show the gameOver
         let brd = document.querySelector('.board');
         let brdEl = brd.children;
+        let tileno = Infinity;
 
-
+        
         //console.log(brdEl);
-        for(let tile of brdEl){ 
+        for(let il=0; il< brdEl.length; il++){ 
+            let tile = brdEl[il];
             // Listening for user imputs
             tile.addEventListener('click', ()=> {
-
+                // console.log(brdEl[il], `Woosh you click me! tile ${il}`);
                 // showing gameOver method
-                if(this.pairCounter()==0){ 
-                    document.querySelector('.gameOver').style.display='flex';
-                    this.showScores();
-                }   
+                if(il != tileno){
+                    tileno=il;
 
-                // console.log(tile.classList);
-                if(tile.classList.contains('blunt')){
-                    tile.classList.toggle('markClick');
-                    if(tile.classList.contains('markClick')){
-                        try{
-                            this._currentMove.push(tile.innerHTML);
-                        // console.log(this._currentMove, 'this is the current move');
-                        this._selected++;
-            
-                            
-            
-                     tile.classList.add('iconClick'); // marking user selection
-
-                        } catch(e){}
+                    if(this.pairCounter()==0){ 
+                        document.querySelector('.gameOver').style.display='flex';
+                        this.showScores();
+                    }   
     
-                    }
-                    
-                }
-            // removing the yellow marks of recently selected pair
-            if(this._selected >=2){ 
-                let brd=document.querySelector('.board');
-                let brdEl = brd.children;
+                    // console.log(tile.classList);
+                    if(tile.classList.contains('blunt')){
+                        tile.classList.toggle('markClick');
+                        if(tile.classList.contains('markClick')){
+                            try{
+                                this._currentMove.push(tile.innerHTML);
+                            // console.log(this._currentMove, 'this is the current move');
+                            this._selected++;
                 
-            for(let i of brdEl){
-
-                i.classList.remove('markClick');
-            
-            }
-            // cleaning the recently selected pair array 
-                this._selected =0;
-            }
-            
+                                
+                
+                         tile.classList.add('iconClick'); // marking user selection
+    
+                            } catch(e){}
+        
+                        }
+                        
+                    }
+                    // removing the yellow marks of recently selected pair
+                    if(this._selected >=2){ 
+                        let brd=document.querySelector('.board');
+                        let brdEl = brd.children;
+                        
+                    for(let i of brdEl){
+    
+                        i.classList.remove('markClick');
+                    
+                    }
+                    // cleaning the recently selected pair array 
+                        this._selected =0;
+                    }
+                
+                }
         });
         
         }
@@ -168,7 +174,7 @@ class Memory {
             let divPText = document.createTextNode(`Player ${i}`);
             divP.appendChild(divPText);
 
-            let divScore = document.createElement('div');
+            let divScore = document.createElement('h2');
             let divScoreText = document.createTextNode(`${this._score[i].score} Pairs`);
             divScore.appendChild(divScoreText);
 
@@ -191,7 +197,7 @@ class Memory {
             i.style.margin='.5%'
             if(parseInt(i.lastElementChild.innerHTML.slice(0,1)) == Math.max(...rank)){
                 let s = document.createElement('span');
-                s.innerHTML='    {winner}';
+                s.innerHTML='    {winner!}';
                 i.firstChild.appendChild(s);
                 i.classList.add('winner');
                 mainStat.appendChild(i);
@@ -547,7 +553,7 @@ function closingRecords(game){
     try{
         for(let i=1; i<game._score.length; i++){ //to clear Scores
             game._score[i].attempts=0;
-            game.score[i].score=0;
+            game._score[i].score=0;
         }
     
         document.querySelector('.gameOver').style.display='none';
@@ -831,12 +837,14 @@ let reset = document.querySelector('.reset');
     menu.addEventListener('click', ()=>{
         reset.style.display='flex';
         menu.style.display='none';
+    
+        reset.addEventListener('click',()=>{
+            reset.style.display='none';
+            menu.style.display='flex';
+        })
     });
 
-    reset.addEventListener('mouseleave',()=>{
-        reset.style.display='none';
-        menu.style.display='flex';
-    })
+    
 
 }
 

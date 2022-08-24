@@ -20,21 +20,21 @@
 }
 
 h1, .h1{
-    font-size: 48px;
+    font-size: 3rem;
     font-weight: 700;
     line-height: 60px;
 }
 h2, .h2{
-    font-size: 32px;
+    font-size: 2rem;
     font-weight: 700;
 }
 h3, .h3{
-    font-size: 26px;
+    font-size: 1.625rem;
     font-weight: 700;
 }
 
 body{
-    font-size: 18px;
+    font-size: 1.125rem;
     font-weight: bold;
     font-family: 'Atkinson Hyperlegible', sans-serif;
     color: var(--white);
@@ -311,7 +311,6 @@ body{
         justify-content: space-between;
         align-items: center;
 
-        font-size: 18px;
         border-radius: 10%;
     }
         .plScore{
@@ -364,14 +363,14 @@ body{
 }
 
 .tile6{
-    font-family: 44px;
+    font-size: 2.75rem;
     width: 14.3%;
     height: 14.3%;
     border-radius: 50%;
     color: var(--white);
 }
 .tile4{
-    font-size: 56px;
+    font-size: 3.5rem;
     width: 23%;
     height: 23%;
     border-radius: 50%;
@@ -457,7 +456,7 @@ body{
         border-radius: 20px;
         box-sizing: border-box;
 
-        padding: 2%;
+        padding: 7% 5%;
 
 
         display: flex;
@@ -468,11 +467,11 @@ body{
         .mainStat, .soloStat{
             width: 82%;
             height: 80%;
-            /* background-color: #f1e3ce; */
-
+            
             display: flex;
             flex-direction: column;
-            /* justify-content: space-around; */
+            
+            justify-content: space-evenly;
             color: var(--darker-grey);
         }
         .soloStat{
@@ -494,55 +493,62 @@ body{
 
             .anotherGame{
                 width: 82%;
-                height: 7%;
+                height: 12%;
                 display: flex;
-                justify-content: space-between;
-                
+                justify-content: space-between;                
             }
             .winner{
                 background-color: var(--darker-grey);
                 color: aliceblue;
             }
 
-            .restart{
+            .anotherGame .restart, .anotherGame .newGame{
                 /* background-color: var(--light-grey); */
+                padding: 2%;
+                width: 49%;
+                height: 100%;
+                box-sizing: border-box;
             }
 
-            .newGame{
+            .anotherGame .newGame{
                 /* background-color: var(--yello); */
+                padding: 2%;
+                box-sizing: border-box;
+
             }
         .mult{
-            /* display: none; */
             width: 100%;
             height: 80%;
-            /* background-color: royalblue; */
-            /* display: flex; */
+            
             flex-direction: column;
-            /* justify-content: center; */
             align-items: center;
         }
 
         .comment{
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: space-around;
             align-items: center;
+            width: fit-content;
             height: 17%;
-            margin-bottom: 3%;
             color:var(--darker-grey);
+            padding-bottom: 4%;
         }
         .comment p{
             display: block;
-            /* background-color: aqua; */
             color: var(--light-grey);
+            margin: 0%;
+            text-align: center;
         }
         .comment h1{
+            margin: 0;
             display: block; 
-            /* background-color: aqua; */
 
         }
 
 @media screen and (max-width: 768px){
+
+    
     .startEl{
         width: 85vw;
         height: 67vh;
@@ -580,6 +586,16 @@ body{
 }
 
 @media screen and (max-width: 375px){
+
+    .tile4{font-size: 40px;}
+    .tile6{font-size: 24px;}
+    .h3, h3 {font-size: 16px;} 
+    .h2, h2 {font-size: 20px;} 
+    .h1, h1{font-size: 1.6rem;}
+    html{
+        font-size: 14px;
+        
+    }
     .startEl{
         width: 87.2vw;
         height: 71vh;
@@ -601,6 +617,7 @@ body{
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        /* padding: 7% 5%; */
     }
         .mainStat, .soloStat{
             width: 85%;
@@ -623,7 +640,6 @@ body{
             justify-content: center;
             align-items: center;
             height: 17%;
-            margin-bottom: 3%;
         }
         .mult{
             display: flex;
@@ -631,12 +647,10 @@ body{
             justify-content: center;
         }
         .hail{
-            /* font-size: 14px; */
             margin: 0;
             padding: 0;
         } 
     .comment:last-child, .comment p{
-        /* font-size: 9px; */
         margin: 0;
         padding: 0;
     }
@@ -650,15 +664,7 @@ body{
     .turn{
         display:none;
     }
-    .tile4{font-size: 40px;}
-    .tile6{font-size: 24px;}
-    .h1, h1{font-size: 32px;}
-    .h3, h3 {font-size: 16px;}
-    .h2, h2 {font-size: 18px;}
-    body{
-        font-size: 15px;
-        
-    }
+    
     .head{
         
         display: flex;
@@ -715,7 +721,19 @@ body{
         justify-content: space-between;
     }
     .anotherGame .restart, .anotherGame .newGame{
-        width: 100%;
+        width: 82%;
         height: 40%;
     }
+
+    .tile4{font-size: 40px;}
+    .tile6{font-size: 24px;}
+    .h3, h3 {font-size: 16px;} 
+    .h2, h2 {font-size: 20px;} 
+    .h1, h1{font-size: 1.6rem;}
+    html{
+        font-size: 14px;
+        
+    }
+
+
 }

@@ -88,11 +88,11 @@ class Memory {
                     tileno=il;
 
                     if(this.pairCounter()==0){ 
+                        
                         document.querySelector('.gameOver').style.display='flex';
                         this.showScores();
-                    }   
-    
-                    // console.log(tile.classList);
+                    }else{
+                        // console.log(tile.classList);
                     if(tile.classList.contains('blunt')){
                         tile.classList.toggle('markClick');
                         if(tile.classList.contains('markClick')){
@@ -110,6 +110,9 @@ class Memory {
                         }
                         
                     }
+                    }
+    
+                    
                     // removing the yellow marks of recently selected pair
                     if(this._selected >=2){ 
                         let brd=document.querySelector('.board');

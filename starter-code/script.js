@@ -565,6 +565,8 @@ function closingRecords(game){
             game._score[i].attempts=0;
             game._score[i].score=0;
         }
+        game._currentMove=[];
+
     
         document.querySelector('.gameOver').style.display='none';
     

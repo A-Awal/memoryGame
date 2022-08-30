@@ -5,7 +5,7 @@ class Memory {
         this._currentArr =[];
         this._score=[];
         this.prevMoves=[];
-        this._numberOfPlayers =4;
+        this._numberOfPlayers =1;
         this._currentMove=[];
         this._currentObj=[];
         this._turn =1;
@@ -98,7 +98,7 @@ class Memory {
                         if(tile.classList.contains('markClick')){
                             try{
                                 this._currentMove.push(tile.innerHTML);
-                            // console.log(this._currentMove, 'this is the current move');
+                            console.log(this._currentMove, 'this is the current move');
                             this._selected++;
                 
                                 
@@ -151,9 +151,15 @@ class Memory {
             let attempts = document.createElement('h2');
 
             attempts.innerHTML=`${this._score[1].attempts} Moves`;
+            if(moves.children.length>1){
+                moves.lastElementChild.remove();
+            }
             moves.appendChild(attempts);
 
             let time = document.querySelector('.time.ex');
+            if(time.children.length>1){
+                time.lastElementChild.remove();
+            }
 
             let timeRep = document.createElement('h2');
             timeRep.innerHTML=`${document.querySelector('.min').innerText}:${document.querySelector('.sec').innerText}`;
@@ -485,7 +491,7 @@ function display(arr, game){
     // A work horse 
     // arr: array 
     // feeds the array to the board visually
-    // responsible for player record cleansing btm games
+    // responsible for player record cleansing btn games
     // becareful soloTimer() jealous of its position can't explain thorougly;
 
     
@@ -527,8 +533,9 @@ function display(arr, game){
 
         document.querySelector('.solo').style.display='none';
 
-        let p =(document.querySelectorAll('.p'));
+        let p =document.querySelectorAll('.p');
         for(let i of p){
+            i.classList.remove('currentPlayer')
             i.classList.add('otherPlayer');
             i.nextElementSibling.style.visibility='hidden';
             i.previousElementSibling.style.visibility='hidden';
@@ -564,6 +571,8 @@ function closingRecords(game){
         // document.querySelector('.mainStat');
         document.querySelector('.mult').style.display='none';
         document.querySelector('.soloStat').style.display='none';
+
+        
     } catch(e){alert(e)}
 }
 
@@ -667,12 +676,18 @@ function newGame(game){
         document.querySelector(`.p${i}`).classList.remove('startClick');
     }
 
+    let numbers = document.querySelector('.numbers');
+    let g4 = document.querySelector('.grid4');
 
-    document.querySelector('.numbers').classList.remove('startClick');
+    if(!numbers.classList.contains('startClick')){
+        numbers.classList.add('startClick');
+    };
     document.querySelector('.icons').classList.remove('startClick');
 
     
-    document.querySelector('.grid4').classList.remove('startClick');
+    if(!g4.classList.contains('startClick')){
+        g4.classList.add('startClick');
+    };
     document.querySelector('.grid6').classList.remove('startClick');
 
     document.querySelector('.grid4').addEventListener('click', (event)=>helpL(event));
@@ -681,6 +696,7 @@ function newGame(game){
     
     // setting the number of players
     let playerNumber = document.querySelectorAll('.player');
+    playerNumber[0].classList.add('startClick')
     for(let i of playerNumber){
         i.addEventListener('click', ()=>{
             playerNumber.forEach(e =>{e.classList.remove('startClick')});
@@ -764,7 +780,8 @@ function GAME(){
 
 
     // choosing tile type
-    let tile = '' // for detecting tyle type in gridload level setting
+    let tile = 'numbers' // for detecting tyle type in gridload level setting
+    game.setTile(icon[1]);
     let iconTile= document.querySelector('.icons');
     let numberTile = document.querySelector('.numbers');
     iconTile.addEventListener('click', (event)=>{
@@ -786,17 +803,25 @@ function GAME(){
     let grid4 = document.querySelector('.grid4');
     let grid6 = document.querySelector('.grid6');
     let currentBoard = [];
-    grid4.addEventListener('click', (event)=>loadIcons(event, game, grid4, grid6, currentBoard, loadBoard, levelVar, display, tile));
-    grid6.addEventListener('click', (event)=>loadIcons(event,game, grid4, grid6, currentBoard, loadBoard, levelVar, display, tile));
-
-    // start listening for moves
+    grid4.addEventListener('click', (event)=>{
+        loadIcons(event, game, grid4, grid6, currentBoard, loadBoard, levelVar, display, tile);
+        // start listening for moves
     document.querySelector('.begin').addEventListener('click', ()=>{
-        if(game._numberOfPlayers==1){
-            
-        }
-        game.getMove();
+        board();
+    });
+    });
+    grid6.addEventListener('click', (event)=>{
+        loadIcons(event,game, grid4, grid6, currentBoard, loadBoard, levelVar, display, tile);
+    document.querySelector('.begin').addEventListener('click', ()=>{
+        board();
+    });
     });
 
+    // start listening for moves - position needed to prevent
+    //  setting multiple listers for moves
+    document.querySelector('.begin').addEventListener('click', ()=>{
+        game.getMove();
+    });
     
     // Restarting game
     for(let i of document.querySelectorAll('.restart')){
@@ -816,38 +841,38 @@ function GAME(){
 
    // the code below is for switching between start screen and board
 
-document.querySelector('.begin').addEventListener('click', function board(){
-    document.querySelector('body').className='body';
-    document.querySelector('.startEl').style.display='none';
-    document.querySelector('.start').style.display='none';
-    
-    document.querySelector('.gameBoard').style.display='flex';
-});
-
-// new game
-for(let i of document.querySelectorAll('.newGame')){
-    i.addEventListener('click', ()=> {
-        newGame(game);
+    function board(){
+        document.querySelector('body').className='body';
+        document.querySelector('.startEl').style.display='none';
+        document.querySelector('.start').style.display='none';
         
-     })
-}
+        document.querySelector('.gameBoard').style.display='flex';
+    }
 
-let mobile = window.matchMedia(('max-width:375'));
-
-let menu = document.querySelector('.menu');
-let reset = document.querySelector('.reset');
-
-    menu.addEventListener('click', ()=>{
-        reset.style.display='flex';
-        menu.style.display='none';
-    
-        reset.addEventListener('click',()=>{
-            reset.style.display='none';
-            menu.style.display='flex';
+    // new game
+    for(let i of document.querySelectorAll('.newGame')){
+        i.addEventListener('click', ()=> {
+            newGame(game);
+            
         })
-    });
+    }
 
-    
+    let mobile = window.matchMedia(('max-width:375'));
+
+    let menu = document.querySelector('.menu');
+    let reset = document.querySelector('.reset');
+
+        menu.addEventListener('click', ()=>{
+            reset.style.display='flex';
+            menu.style.display='none';
+        
+            reset.addEventListener('click',()=>{
+                reset.style.display='none';
+                menu.style.display='flex';
+            })
+        });
+
+        
 
 }
 

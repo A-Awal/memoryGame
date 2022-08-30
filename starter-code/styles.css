@@ -11,6 +11,7 @@
     --game-number-4X4: 56px;
     --game-number-6X6: 44px;
     --close:none;
+    --hover-yello: #ffb84a;
 
 }
 
@@ -41,7 +42,8 @@ body{
 
     width: 100vw;
     height: 100vh;
-    
+    overflow-y: hidden;
+    overflow-x: hidden;
 
 }
 .regular{
@@ -70,7 +72,6 @@ body{
     flex-direction: column;
     justify-content: space-between;
 
-
 }
 .star{
     display: flex;
@@ -92,9 +93,12 @@ body{
     justify-content: space-between;
 
     position: relative;
-
+    box-sizing: border-box;
+    padding: 5.5vh 4vw;
 
 }
+
+
     .theme, .players, .gridSize{
         width: 100%;
         height: 17%;
@@ -102,7 +106,10 @@ body{
 
     }
     .theme{
-        
+        display:flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 20%;
     }
 
       .numbers, .icons{ 
@@ -119,10 +126,13 @@ body{
         align-items: center;
 
         border-radius: 50px;
+
+        padding-top: 1%;
+        padding-bottom: 1%;
         }
 
         .numbers{
-            background-color: var(--dark-grey);
+            background-color: var(--light-grey);
             left: 0%;
 
         }
@@ -131,6 +141,10 @@ body{
             right: 0%;
 
         }
+        .icons:hover, .numbers:hover, .player:hover, .grid:hover{
+            background-color: var(--blue-grey);
+        }
+    
 
     .players{
 
@@ -152,11 +166,13 @@ body{
                 justify-content: center;
                 align-items: center;
                 border-radius: 50px;
-                
+
+                padding-top: 5%;
+                padding-bottom: 5%;
             }
 
             .p1{
-                background-color: var(--dark-grey);
+                background-color: var(--light-grey);
             }
 
     .grid-size{
@@ -177,13 +193,16 @@ body{
                 width: 47%;
                 border-radius: 50px;
 
+
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                padding-top: 5%;
+                padding-bottom: 5%;
             }
             .grid4{
                 font-weight: bold;
-                background-color:var(--dark-grey);
+                background-color:var(--light-grey);
             }
             .grid6{
                 font-weight: bold;
@@ -192,13 +211,15 @@ body{
             }
     .begin{
         width: 100%;
-        height:13%;
+        height:14%;
         border-radius: 100px;
         background-color: var(--yello) ;
         border-color: inherit;
-
         
-    
+    }
+
+    .begin:hover{
+        background-color: var(--hover-yello) ;
     }
     
 
@@ -256,6 +277,13 @@ body{
             color: var(--dark-grey);
             
         }
+        .restart:hover{
+            background-color: var(--hover-yello);
+        }
+
+        .newGame:hover{
+            background-color: var(--blue-grey);
+        }
         .restart, .newGame, .menu{
             border-radius: 50px;
             height: 100%;
@@ -311,7 +339,7 @@ body{
         justify-content: space-between;
         align-items: center;
 
-        border-radius: 10%;
+        border-radius: 10px;
     }
         .plScore{
             font-size: 32px;
@@ -346,13 +374,14 @@ body{
     height: 100%;
 }
 
-.time.ex{
-    margin: 1%;
+.time.ex, .moves.ex{
+    padding-right: 2%;
+    padding-left: 2%;
 }
 
-.moves.ex{
+/* .moves.ex{
     
-}
+} */
 
 /* .time:last-child, .moves:last-child{
     font-size: ;
@@ -391,7 +420,7 @@ body{
 }
 
 .startClick{
-    background-color: var(--blue-grey);
+    background-color: var(--dark-grey) !important;
 }
 
 .iconClick{
@@ -439,13 +468,19 @@ body{
     display: none; 
     position: absolute;
     width: 100vw;
-    height: 100vh;
+    height: 110vh;
     background-color: rgba(154, 151, 151, 0.418);
-    
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 
     /* display: flex; */
     justify-content: center;
     align-items: center;
+
+    overflow-y: hidden;
+    overflow-x: hidden;
 }
 
     .multiplayerStat{
@@ -489,6 +524,8 @@ body{
                 justify-content: space-between;
                 align-items: center;
                 color: var(--darker-grey);
+                padding-right: 2%;
+                padding-left: 2%;
             }
 
             .anotherGame{
@@ -547,6 +584,11 @@ body{
         }
 
 @media screen and (max-width: 768px){
+
+    body{
+        overflow-y: hidden;
+        overflow-x: hidden;
+    }
 
     
     .startEl{
